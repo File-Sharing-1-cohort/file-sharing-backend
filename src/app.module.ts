@@ -3,9 +3,10 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { dataSourceOptionst } from './database/db-config';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
-  imports: [TypeOrmModule.forRoot(dataSourceOptionst)],
+  imports: [ConfigModule.forRoot(), TypeOrmModule.forRoot(dataSourceOptionst)],
   controllers: [AppController],
   providers: [AppService],
 })

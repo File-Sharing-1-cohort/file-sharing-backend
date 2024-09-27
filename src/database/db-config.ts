@@ -9,7 +9,7 @@ export const dataSourceOptionst: DataSourceOptions = {
   database: process.env.PGDATABASE,
   entities: ['dist/**/*entity.js'],
   migrations: ['dist/database/migrations/*.js'],
-  migrationsRun: true,
+  migrationsRun: false,
   synchronize: true,
   logging: ['warn', 'error'],
   ssl: {
