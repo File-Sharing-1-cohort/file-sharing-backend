@@ -4,9 +4,14 @@ import { AppService } from './app.service';
 import { dataSourceOptionst } from './database/db-config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
+import { FilesModule } from './files/files.module';
 
 @Module({
-  imports: [ConfigModule.forRoot(), TypeOrmModule.forRoot(dataSourceOptionst)],
+  imports: [
+    ConfigModule.forRoot(),
+    TypeOrmModule.forRoot(dataSourceOptionst),
+    FilesModule,
+  ],
   controllers: [AppController],
   providers: [AppService],
 })
