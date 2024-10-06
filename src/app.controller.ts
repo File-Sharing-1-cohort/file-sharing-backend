@@ -2,6 +2,7 @@ import { Controller, Get, Res } from '@nestjs/common';
 import { AppService } from './app.service';
 import { Response } from 'express';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+
 @ApiTags('files')
 @Controller()
 export class AppController {
@@ -9,7 +10,7 @@ export class AppController {
 
   @Get('ping')
   ping() {
-    return;
+    return { status: 200 };
   }
 
   @Get('public/logo')
