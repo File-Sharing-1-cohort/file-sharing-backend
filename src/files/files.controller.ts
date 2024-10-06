@@ -55,10 +55,8 @@ export class FilesController {
 
   @Get(':id')
   @ApiOperation({ summary: 'Get file from DB' })
-  @ApiResponse({
-    status: 200,
-    description: 'File content',
-  })
+  @ApiResponse({ status: 200, description: 'File content' })
+  @ApiResponse({ status: 404, description: 'File not found' })
   findOne(@Param('id', ParseIntPipe) id: string) {
     return this.filesService.getFile(+id);
   }
