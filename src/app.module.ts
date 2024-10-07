@@ -4,10 +4,15 @@ import { AppService } from './app.service';
 import { dataSourceOptionst } from './database/db-config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { FilesModule } from './files/files.module';
 import * as AWS from 'aws-sdk';
 
 @Module({
-  imports: [ConfigModule.forRoot(), TypeOrmModule.forRoot(dataSourceOptionst)],
+  imports: [
+    ConfigModule.forRoot(),
+    TypeOrmModule.forRoot(dataSourceOptionst),
+    FilesModule,
+  ],
   controllers: [AppController],
   providers: [
     {
