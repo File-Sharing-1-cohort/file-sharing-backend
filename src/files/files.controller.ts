@@ -9,13 +9,18 @@ import {
   MaxFileSizeValidator,
   FileTypeValidator,
   ParseIntPipe,
+  Res,
+  NotFoundException,
+  BadRequestException,
 } from '@nestjs/common';
+import { Response } from 'express';
 import { FilesService } from './files.service';
 import { FileInterceptor } from '@nestjs/platform-express';
 import {
   ApiBody,
   ApiConsumes,
   ApiOperation,
+  ApiProduces,
   ApiResponse,
 } from '@nestjs/swagger';
 
@@ -54,10 +59,31 @@ export class FilesController {
   }
 
   @Get(':id')
-  @ApiOperation({ summary: 'Get file from DB' })
-  @ApiResponse({ status: 200, description: 'File content' })
-  @ApiResponse({ status: 404, description: 'File not found' })
-  findOne(@Param('id', ParseIntPipe) id: string) {
-    return this.filesService.getFile(+id);
+  @ApiOperation({ summary: 'Get fileName from DB, and download file from S3' })
+  @ApiResponse({
+    status: 200,
+    description: 'File content successfully retrieved',
+    content: {
+      'application/octet-stream': {
+        schema: {
+          type: 'string',
+          format: 'binary',
+        },
+      },
+    },
+  })
+  @ApiProduces('application/octet-stream')
+  @ApiResponse({
+    status: 404,
+    description: 'File not found',
+    type: NotFoundException,
+  })
+  @ApiResponse({
+    status: 400,
+    description: 'Bad Request',
+    type: BadRequestException,
+  })
+  findOne(@Param('id', ParseIntPipe) id: number, @Res() res: Response) {
+    return this.filesService.getFile(id, res);
   }
 }

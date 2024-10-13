@@ -5,10 +5,13 @@ export class TransferredFile {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
-  fileName: string;
+  @Column({ nullable: true })
+  originalFileName: string;
 
-  @Column()
+  @Column({ nullable: true })
+  awsFileName: string;
+
+  @Column({ nullable: true })
   link: string;
 
   @Column({ nullable: true })
