@@ -1,24 +1,27 @@
-import { Inject, Injectable } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
-import { S3 } from 'aws-sdk';
+import {
+  Inject,
+  Injectable,
+  InternalServerErrorException,
+} from '@nestjs/common';
+import { getParams } from './aws/s3-upload.params';
+import { GetObjectCommand } from '@aws-sdk/client-s3';
+import { Response } from 'express';
+import { Readable } from 'stream';
 
 @Injectable()
 export class AppService {
-  constructor(
-    private configService: ConfigService,
-    @Inject('S3_CLIENT') private s3: S3,
-  ) {}
+  constructor(@Inject('S3_CLIENT') private s3) {}
 
-  async getLogo(name: string): Promise<any> {
-    const params = {
-      Bucket: this.configService.get('AWS_S3_BUCKET_NAME'),
-      Key: name,
-    };
+  async getLogo(res: Response): Promise<any> {
     try {
-      const data = await this.s3.getObject(params).promise();
-      return data.Body;
+      const logoResponse = (
+        await this.s3.send(new GetObjectCommand(getParams(process.env.LOGO)))
+      ).Body as Readable;
+      logoResponse.pipe(res.set({ 'Content-Type': 'image/png' }));
     } catch (error) {
-      throw new Error(`Error fetching logo from S3: ${error}`);
+      throw new InternalServerErrorException(
+        `Error fetching logo from S3: ${error}`,
+      );
     }
   }
 }

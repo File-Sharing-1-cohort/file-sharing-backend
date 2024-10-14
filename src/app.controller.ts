@@ -18,8 +18,6 @@ export class AppController {
   @ApiResponse({ status: 200, description: 'The logo image' })
   @ApiResponse({ status: 404, description: 'Logo not found' })
   async getLogo(@Res() res: Response) {
-    const logo = await this.appService.getLogo('logo.png');
-    res.setHeader('Content-Type', 'image/png');
-    return res.send(logo);
+    return this.appService.getLogo(res);
   }
 }

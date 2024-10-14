@@ -1,4 +1,5 @@
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Exclude } from 'class-transformer';
 
 @Entity('file')
 export class TransferredFile {
@@ -15,5 +16,6 @@ export class TransferredFile {
   link: string;
 
   @Column({ nullable: true })
+  @Exclude()
   password: string;
 }
