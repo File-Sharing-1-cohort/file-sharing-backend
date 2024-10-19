@@ -17,7 +17,7 @@ describe('AppController (e2e)', () => {
 
   it('/ping (GET)', () => {
     return request(app.getHttpServer())
-      .get('/')
+      .get('/ping')
       .expect(200)
       .expect({ status: 200 });
   });
