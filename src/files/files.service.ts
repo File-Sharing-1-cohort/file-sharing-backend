@@ -7,7 +7,7 @@ import {
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { TransferredFile } from './entities/file.entity';
-import { getParams } from 'src/aws/s3-upload.params';
+import { getParams } from '../aws/s3-upload.params';
 import { GetObjectCommand, PutObjectCommand } from '@aws-sdk/client-s3';
 import { Readable } from 'stream';
 import { Response } from 'express';
