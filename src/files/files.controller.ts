@@ -48,7 +48,8 @@ export class FilesController {
         validators: [
           new MaxFileSizeValidator({ maxSize: 1024 * 1024 * 50 }),
           new FileTypeValidator({
-            fileType: '.(jpg|jpeg|png|gif|doc|docx|xls|xlsx|pdf|zip|rar)',
+            fileType:
+              /^(image\/(jpeg|png|gif)|application\/(msword|vnd\.openxmlformats-officedocument\.wordprocessingml\.document|vnd\.ms-excel|vnd\.openxmlformats-officedocument\.spreadsheetml\.sheet|pdf|zip|x-rar-compressed))$/,
           }),
         ],
       }),
